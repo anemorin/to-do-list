@@ -1,0 +1,81 @@
+header {
+  margin: 8px;
+  padding: 16px;
+  border-radius: 6px;
+  background-color: cadetblue;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header h2 {
+  font-size: 24px;
+}
+
+main {
+  padding: 24px;
+  display: flex;
+}
+
+.main_to-do {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+aside {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  gap: 8px;
+}
+aside input {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.aside_btn {
+  padding: 8px;
+  border-radius: 8px;
+  background-color: cadetblue;
+  color: white;
+  border: none;
+}
+
+.item {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px black solid;
+  border-radius: 6px;
+}
+.item button {
+  display: none;
+  width: 18px;
+  heigth: 18px;
+  background: cadetblue;
+  border: none;
+  border-radius: 4px;
+}
+.item:hover button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_succses {
+  text-decoration: line-through;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+}
+
+/*# sourceMappingURL=app.css.map */
