@@ -1,12 +1,19 @@
 {
-  "name": "toDoList",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "name": "to-do-list",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "watch": "sass --watch styles:app"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
   "dependencies": {
     "sass": "^1.69.5"
-  },
-  "scripts": {
-    "watch": "sass --watch styles:app"
   }
 }

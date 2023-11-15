@@ -1,34 +1,35 @@
-const root = document.getElementsByClassName('main_to-do')[0]
-const inputText = document.getElementsByClassName('input_text')[0]
-const inputTime = document.getElementsByClassName('input_time')[0]
-
-let activeTasks = [];
-let inactiveTasks = [];
+const root = document.getElementsByClassName('main_to-do')[0] as HTMLElement;
+const inputText = document.getElementsByClassName('input_text')[0] as HTMLInputElement
+const inputTime = document.getElementsByClassName('input_time')[0] as HTMLInputElement
+const clearButton = document.getElementsByClassName("clear")[0] as HTMLButtonElement
+const addButton = document.getElementsByClassName("add")[0] as HTMLButtonElement
 
 class toDoItem {
-    constructor(text, time) {
-        this.text = text, 
+    text: string;
+    time: string;
+
+    constructor(text : string, time : string) {
+        this.text = text,
         this.time = time
     }
 }
 
-if (localStorage.getItem('active') !== null) {
-    activeTasks = JSON.parse(localStorage.getItem('active'))
-}
+let toDos : string | null = localStorage.getItem('active');
+let activeTasks : toDoItem[]  = toDos !== null ? JSON.parse(toDos) : []
 
-if (localStorage.getItem('inactive') !== null) {
-    inactiveTasks = JSON.parse(localStorage.getItem('inactive'))
-}
+toDos = localStorage.getItem('inactive')
+let inactiveTasks : toDoItem[] = toDos !== null ? JSON.parse(toDos) : []
 
-render(activeTasks, inactiveTasks) 
 
-document.getElementsByClassName("clear")[0].onclick = () => {
+render(activeTasks, inactiveTasks)
+
+clearButton.onclick = () => {
     activeTasks = []
     inactiveTasks = []
     render(activeTasks, inactiveTasks)
 }
 
-document.getElementsByClassName("add")[0].onclick = () => {
+addButton.onclick = () => {
     let text = inputText.value;
     let time = inputTime.value;
 
@@ -40,7 +41,7 @@ document.getElementsByClassName("add")[0].onclick = () => {
     render(activeTasks, inactiveTasks)
 }
 
-function render(active, inactive) {
+function render(active : toDoItem[], inactive : toDoItem[]) {
     active.sort(compareByTime)
     root.innerHTML = ''
 
@@ -48,7 +49,7 @@ function render(active, inactive) {
         let active_header = document.createElement('h2')
         active_header.innerText = 'Активные'
         root.appendChild(active_header)
-        active.map(i => { 
+        active.map(i => {
             let item = createItem(i)
 
             item.addEventListener('click', (event) => {
@@ -58,7 +59,7 @@ function render(active, inactive) {
                 event.stopPropagation()
             })
 
-            let bucket = item.querySelector('img') 
+            let bucket = item.querySelector('img') as HTMLElement
             bucket.addEventListener('click', (event) => {
                 active.splice(active.indexOf(i), 1)
                 render(active, inactive)
@@ -75,7 +76,7 @@ function render(active, inactive) {
             let item = createItem(j)
             item.className += ' item_succses'
 
-            let bucket = item.querySelector('img') 
+            let bucket = item.querySelector('img') as HTMLElement
             bucket.addEventListener('click', (event) => {
                 inactive.splice(inactive.indexOf(j), 1)
                 render(active, inactive)
@@ -88,12 +89,11 @@ function render(active, inactive) {
     localStorage.setItem('inactive', JSON.stringify(inactive))
 }
 
-
-function createItem(toDo) {
+function createItem(toDo : toDoItem) {
     let item = document.createElement('div')
     let time = document.createElement('p')
     let text = document.createElement('p')
-    let delButton = document.createElement('button') 
+    let delButton = document.createElement('button')
     let delIcon = document.createElement('img')
 
     time.textContent = toDo.time
@@ -112,8 +112,11 @@ function createItem(toDo) {
     return item
 }
 
-function compareByTime(a, b) {
-    const timeA = new Date(`2000-01-01T${a.time}`);
-    const timeB = new Date(`2000-01-01T${b.time}`);
-    return timeA - timeB;
+function compareByTime(a:toDoItem, b:toDoItem) {
+    const timeA: Date = new Date(`2000-01-01T${a.time}`);
+    const timeB: Date = new Date(`2000-01-01T${b.time}`);
+    if (timeA < timeB) return -1;
+    if (timeA > timeB) return +1;
+
+    return 0; // dates are equal
   }
